@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import FieldTypeSelector from './FieldTypeSelector';
-import FormPreview from './FormPreview';
-import FieldConfigPanel from './FieldConfigPanel';
+import { FieldTypeSelector } from 'components/Forms/FieldTypeSelector';
+import { FormPreview } from 'components/Forms/FormPreview';
+import { FieldConfigPanel } from 'components/Forms/FieldConfigPanel';
 
-export default function FormBuilder() {
+export function FormBuilder() {
   const [formData, setFormData] = useState({
     title: "Untitled Form",
     description: "",
@@ -103,53 +103,53 @@ export default function FormBuilder() {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
+    <div className="">
       {/* Form Settings Panel */}
-      <div className="md:col-span-1 bg-white rounded-lg shadow p-4">
-        <h2 className="text-xl font-bold mb-4">Form Settings</h2>
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">Form Title</label>
+      <div className="">
+        <h2 className="">Form Settings</h2>
+        <div className="">
+          <label className="">Form Title</label>
           <input
             type="text"
             value={formData.title}
             onChange={(e) => updateFormSettings({ title: e.target.value })}
-            className="w-full border rounded p-2"
+            className=""
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">Description</label>
+        <div className="">
+          <label className="">Description</label>
           <textarea
             value={formData.description}
             onChange={(e) =>
               updateFormSettings({ description: e.target.value })
             }
-            className="w-full border rounded p-2"
+            className=""
             rows="3"
           />
         </div>
 
-        <h3 className="text-lg font-bold mt-6 mb-3">Add Field</h3>
+        <h3 className="">Add Field</h3>
         <FieldTypeSelector onAddField={addField} />
 
         <button
           onClick={saveForm}
           disabled={isSaving}
-          className="mt-6 w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 flex justify-center items-center"
+          className=""
         >
           {isSaving ? "Saving..." : "Save Form"}
         </button>
 
         {formSaved && (
-          <div className="mt-3 p-2 bg-green-100 text-green-800 rounded text-center">
+          <div className="">
             Form saved successfully!
           </div>
         )}
       </div>
 
       {/* Form Preview */}
-      <div className="md:col-span-2">
-        <div className="bg-white rounded-lg shadow p-4 mb-4">
-          <h2 className="text-xl font-bold mb-4">Form Preview</h2>
+      <div className="">
+        <div className="">
+          <h2 className="">Form Preview</h2>
           <FormPreview
             formData={formData}
             selectedFieldId={selectedField?.id}
@@ -161,8 +161,8 @@ export default function FormBuilder() {
 
         {/* Field Configuration Panel */}
         {selectedField && (
-          <div className="bg-white rounded-lg shadow p-4">
-            <h2 className="text-xl font-bold mb-4">Field Settings</h2>
+          <div className="">
+            <h2 className="">Field Settings</h2>
             <FieldConfigPanel
               field={selectedField}
               onUpdateField={(updates) =>
