@@ -12,13 +12,12 @@ export function FieldTypeSelector({ onAddField }) {
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-2">
+    <div className="form-fields">
       {fieldTypes.map((field) => (
         <button
+          className="form-btn"
           key={field.type}
-          onClick={() => onAddField(field.type)}
-          className="border border-gray-300 rounded p-2 text-sm hover:bg-gray-50"
-        >
+          onClick={() => onAddField(field.type)}>
           {field.label}
         </button>
       ))}

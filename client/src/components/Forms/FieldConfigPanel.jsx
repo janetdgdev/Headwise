@@ -18,36 +18,33 @@ export function FieldConfigPanel({ field, onUpdateField }) {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="field-settings">
       <div>
-        <label className="block text-sm font-medium mb-1">Field Label</label>
+        <label className="">Field Label</label>
         <input
           type="text"
           value={field.label}
           onChange={(e) => onUpdateField({ label: e.target.value })}
-          className="w-full border rounded p-2"
-        />
+          className=""/>
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">Placeholder</label>
+        <label className="">Placeholder</label>
         <input
           type="text"
           value={field.placeholder}
           onChange={(e) => onUpdateField({ placeholder: e.target.value })}
-          className="w-full border rounded p-2"
-        />
+          className=""/>
       </div>
 
-      <div className="flex items-center">
+      <div className="">
         <input
           type="checkbox"
           id="required"
           checked={field.required}
           onChange={(e) => onUpdateField({ required: e.target.checked })}
-          className="mr-2"
-        />
-        <label htmlFor="required" className="text-sm font-medium">
+          className=""/>
+        <label htmlFor="required" className="">
           Required
         </label>
       </div>
@@ -56,33 +53,26 @@ export function FieldConfigPanel({ field, onUpdateField }) {
         field.type === "radio" ||
         field.type === "checkbox") && (
         <div>
-          <label className="block text-sm font-medium mb-1">Options</label>
-          <div className="space-y-2">
+          <label className="1">Options</label>
+          <div className="">
             {field.options.map((option, index) => (
-              <div key={index} className="flex items-center">
+              <div key={index} className="">
                 <input
                   type="text"
                   value={option}
                   onChange={(e) => handleOptionChange(index, e.target.value)}
-                  className="flex-1 border rounded p-2"
-                />
+                  className=""/>
                 <button
                   onClick={() => removeOption(index)}
-                  className="ml-2 text-red-500 hover:text-red-700"
-                >
-                  &times;
-                </button>
+                  className="">&times;</button>
               </div>
             ))}
             <button
               onClick={addOption}
-              className="text-sm text-blue-600 hover:text-blue-800"
-            >
-              + Add Option
-            </button>
+              className="">+ Add Option</button>
           </div>
         </div>
       )}
     </div>
   );
-};
+}

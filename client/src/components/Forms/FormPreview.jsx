@@ -1,4 +1,4 @@
-export function FormPreview ({
+export function FormPreview({
   formData,
   selectedFieldId,
   onSelectField,
@@ -7,10 +7,8 @@ export function FormPreview ({
 }) {
   const renderField = (field) => {
     const isSelected = selectedFieldId === field.id;
-
-    const fieldClasses = `p-4 border rounded mb-4 ${
-      isSelected ? "border-blue-500 bg-blue-50" : "border-gray-300"
-    }`;
+    // styling based on selected or not
+    const fieldClasses = `.. ${isSelected ? "..selected" : "..notSelected"}`;
 
     let fieldElement;
 
@@ -22,24 +20,19 @@ export function FormPreview ({
           <input
             type={field.type}
             placeholder={field.placeholder}
-            className="w-full border rounded p-2"
+            className=""
             disabled
           />
         );
         break;
       case "textarea":
         fieldElement = (
-          <textarea
-            placeholder={field.placeholder}
-            rows="3"
-            className="w-full border rounded p-2"
-            disabled
-          />
+          <textarea placeholder={field.placeholder} className="" disabled />
         );
         break;
       case "dropdown":
         fieldElement = (
-          <select className="w-full border rounded p-2" disabled>
+          <select className="" disabled>
             <option value="">Select an option</option>
             {field.options.map((option, i) => (
               <option key={i} value={option}>
@@ -51,14 +44,14 @@ export function FormPreview ({
         break;
       case "radio":
         fieldElement = (
-          <div className="space-y-2">
+          <div className="">
             {field.options.map((option, i) => (
-              <div key={i} className="flex items-center">
+              <div key={i} className="">
                 <input
                   type="radio"
                   id={`${field.id}-${i}`}
                   name={field.id}
-                  className="mr-2"
+                  className=""
                   disabled
                 />
                 <label htmlFor={`${field.id}-${i}`}>{option}</label>
@@ -75,7 +68,7 @@ export function FormPreview ({
                 <input
                   type="checkbox"
                   id={`${field.id}-${i}`}
-                  className="mr-2"
+                  className=""
                   disabled
                 />
                 <label htmlFor={`${field.id}-${i}`}>{option}</label>
@@ -85,12 +78,10 @@ export function FormPreview ({
         );
         break;
       case "date":
-        fieldElement = (
-          <input type="date" className="w-full border rounded p-2" disabled />
-        );
+        fieldElement = <input type="date" className="" disabled />;
         break;
       case "file":
-        fieldElement = <input type="file" className="w-full" disabled />;
+        fieldElement = <input type="file" className="" disabled />;
         break;
       default:
         fieldElement = <p>Unsupported field type</p>;
@@ -102,20 +93,18 @@ export function FormPreview ({
         className={fieldClasses}
         onClick={() => onSelectField(field)}
       >
-        <div className="flex justify-between items-center mb-2">
-          <label className="font-medium">
+        <div className="">
+          <label className="">
             {field.label}{" "}
-            {field.required && <span className="text-red-500">*</span>}
+            {field.required && <span className="asterisk">*</span>}
           </label>
           <button
             onClick={(e) => {
               e.stopPropagation();
               onRemoveField(field.id);
             }}
-            className="text-red-500 hover:text-red-700"
-          >
-            &times;
-          </button>
+            className="remove">
+            &times;</button>
         </div>
         {fieldElement}
       </div>
@@ -123,14 +112,17 @@ export function FormPreview ({
   };
 
   return (
-    <div className="form-preview">
-      <h3 className="text-xl font-bold mb-2">{formData.title}</h3>
-      {formData.description && <p className="mb-6">{formData.description}</p>}
+    <div className="form-preview-component">
+      <h2 className="section-title">Form Preview</h2>
+      <h3 className="preview-title">{formData.title}</h3>
+      {formData.description && (
+        <p className="preview-description">{formData.description}</p>
+      )}
 
       {formData.fields.length === 0 ? (
-        <div className="text-center p-8 border border-dashed rounded">
-          <p className="text-gray-500">
-            Your form is empty. Add fields from the panel on the left.
+        <div>
+          <p className="preview-placeholder">
+            Your form is empty. Add fields from the form settings.
           </p>
         </div>
       ) : (
@@ -138,4 +130,4 @@ export function FormPreview ({
       )}
     </div>
   );
-};
+}

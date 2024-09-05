@@ -1,12 +1,12 @@
-import React, { useState, useCallback } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { FieldTypeSelector } from 'components/Forms/FieldTypeSelector';
-import { FormPreview } from 'components/Forms/FormPreview';
-import { FieldConfigPanel } from 'components/Forms/FieldConfigPanel';
+import React, { useState, useCallback } from "react";
+import { v4 as uuidv4 } from "uuid";
+import { FieldTypeSelector } from "components/Forms/FieldTypeSelector";
+import { FormPreview } from "components/Forms/FormPreview";
+import { FieldConfigPanel } from "components/Forms/FieldConfigPanel";
 
 export function FormBuilder() {
   const [formData, setFormData] = useState({
-    title: "Untitled Form",
+    title: "",
     description: "",
     fields: [],
   });
@@ -103,72 +103,52 @@ export function FormBuilder() {
   };
 
   return (
-    <div className="">
+    <div className="form-builder-container">
       {/* Form Settings Panel */}
-      <div className="">
-        <h2 className="">Form Settings</h2>
-        <div className="">
-          <label className="">Form Title</label>
-          <input
-            type="text"
-            value={formData.title}
-            onChange={(e) => updateFormSettings({ title: e.target.value })}
-            className=""
-          />
-        </div>
-        <div className="">
-          <label className="">Description</label>
-          <textarea
-            value={formData.description}
-            onChange={(e) =>
-              updateFormSettings({ description: e.target.value })
-            }
-            className=""
-            rows="3"
-          />
-        </div>
 
-        <h3 className="">Add Field</h3>
-        <FieldTypeSelector onAddField={addField} />
-
-        <button
-          onClick={saveForm}
-          disabled={isSaving}
-          className=""
-        >
+      <div className="form-settings">
+        <h2 className="section-title">Form Settings</h2>
+        <label>Form Title</label>
+        <input
+          type="text"
+          value={formData.title}
+          onChange={(e) => updateFormSettings({ title: e.target.value })}
+          placeholder="Title"/>
+        <label className="">Description</label>
+        <textarea
+          value={formData.description}
+          onChange={(e) => updateFormSettings({ description: e.target.value })}/>
+        <h3>Add Field</h3>
+        <FieldTypeSelector onAddField={addField} className="field-selector"/>
+        <button onClick={saveForm} disabled={isSaving} className="btn">
           {isSaving ? "Saving..." : "Save Form"}
         </button>
 
         {formSaved && (
-          <div className="">
-            Form saved successfully!
-          </div>
+          <div className="form-success">Form saved successfully!</div>
         )}
       </div>
 
       {/* Form Preview */}
-      <div className="">
-        <div className="">
-          <h2 className="">Form Preview</h2>
+      <div className="form-preview">
+        <div className="preview">
           <FormPreview
+            className="form-preview-component"
             formData={formData}
             selectedFieldId={selectedField?.id}
             onSelectField={setSelectedField}
             onRemoveField={removeField}
-            onMoveField={moveField}
-          />
+            onMoveField={moveField}/>
         </div>
 
         {/* Field Configuration Panel */}
         {selectedField && (
-          <div className="">
+          <div className="field-settings-container">
             <h2 className="">Field Settings</h2>
             <FieldConfigPanel
               field={selectedField}
               onUpdateField={(updates) =>
-                updateField(selectedField.id, updates)
-              }
-            />
+                updateField(selectedField.id, updates)}/>
           </div>
         )}
       </div>
