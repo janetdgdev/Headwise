@@ -645,15 +645,16 @@ input[type=text] {
   justify-content: space-between;
 }
 
-.form-settings, .field-settings-container {
+.form-settings {
   width: 24%;
+  height: max-content;
 }
 
 .form-preview {
   width: 74%;
 }
 
-.form-settings, .form-preview-component, .field-settings-container {
+.form-settings, .form-preview-component {
   display: flex;
   flex-wrap: wrap;
   border: 2px solid var(--Jet);
@@ -671,7 +672,6 @@ input[type=text] {
 
 .form-fields{
   width: 100%;
-  margin: 1rem 0;
 }
 
 .form-settings {

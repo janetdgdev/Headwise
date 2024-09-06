@@ -76,29 +76,42 @@ export function FormBuilder() {
     }));
   };
 
-  const saveForm = async () => {
-    setIsSaving(true);
-
+  const saveForm = () => {
     try {
-      const response = await fetch("/api/forms", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-        credentials: "include",
-      });
+      // Generate a unique ID for the form
+      const formId = `form_${Date.now()}`;
 
-      if (response.ok) {
-        setFormSaved(true);
-        setTimeout(() => setFormSaved(false), 3000);
-      } else {
-        console.error("Failed to save form");
-      }
+      // Get existing forms from local storage or initialize an empty array
+      const existingForms = JSON.parse(
+        localStorage.getItem("savedForms") || "[]"
+      );
+
+      // Add the new form to the existing forms
+      const updatedForms = [
+        ...existingForms,
+        {
+          id: formId,
+          ...formData,
+          createdAt: new Date().toISOString(),
+        },
+      ];
+
+      // Save to local storage
+      localStorage.setItem("savedForms", JSON.stringify(updatedForms));
+
+      // Optional: Show success message
+      alert("Form saved successfully!");
+
+      // Optional: Reset form or navigate
+      setFormData({
+        title: "Untitled Form",
+        description: "",
+        fields: [],
+      });
     } catch (error) {
-      console.error("Error saving form:", error);
-    } finally {
-      setIsSaving(false);
+      // Handle potential localStorage errors
+      console.error("Failed to save form", error);
+      alert("Failed to save form. Please try again.");
     }
   };
 
@@ -113,13 +126,15 @@ export function FormBuilder() {
           type="text"
           value={formData.title}
           onChange={(e) => updateFormSettings({ title: e.target.value })}
-          placeholder="Title"/>
+          placeholder="Title"
+        />
         <label className="">Description</label>
         <textarea
           value={formData.description}
-          onChange={(e) => updateFormSettings({ description: e.target.value })}/>
+          onChange={(e) => updateFormSettings({ description: e.target.value })}
+        />
         <h3>Add Field</h3>
-        <FieldTypeSelector onAddField={addField} className="field-selector"/>
+        <FieldTypeSelector onAddField={addField} className="field-selector" />
         <button onClick={saveForm} disabled={isSaving} className="btn">
           {isSaving ? "Saving..." : "Save Form"}
         </button>
@@ -127,6 +142,20 @@ export function FormBuilder() {
         {formSaved && (
           <div className="form-success">Form saved successfully!</div>
         )}
+        <div className="field-settings">
+          {/* Field Configuration Panel */}
+          {selectedField && (
+            <div className="field-settings-container">
+              <h2 className="">Field Settings</h2>
+              <FieldConfigPanel
+                field={selectedField}
+                onUpdateField={(updates) =>
+                  updateField(selectedField.id, updates)
+                }
+              />
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Form Preview */}
@@ -138,19 +167,9 @@ export function FormBuilder() {
             selectedFieldId={selectedField?.id}
             onSelectField={setSelectedField}
             onRemoveField={removeField}
-            onMoveField={moveField}/>
+            onMoveField={moveField}
+          />
         </div>
-
-        {/* Field Configuration Panel */}
-        {selectedField && (
-          <div className="field-settings-container">
-            <h2 className="">Field Settings</h2>
-            <FieldConfigPanel
-              field={selectedField}
-              onUpdateField={(updates) =>
-                updateField(selectedField.id, updates)}/>
-          </div>
-        )}
       </div>
     </div>
   );
