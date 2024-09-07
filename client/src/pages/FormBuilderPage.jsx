@@ -1,4 +1,4 @@
-import { FormBuilder } from 'components/Forms/FormBuilder'
+import { FormBuilder } from 'src/components/FormBuilder/FormBuilder'
 
 export function FormBuilderPage() {
     return (

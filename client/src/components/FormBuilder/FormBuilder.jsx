@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { FieldTypeSelector } from "components/Forms/FieldTypeSelector";
-import { FormPreview } from "components/Forms/FormPreview";
-import { FieldConfigPanel } from "components/Forms/FieldConfigPanel";
+import { FieldTypeSelector } from "src/components/FormBuilder/FieldTypeSelector";
+import { FormPreview } from "src/components/FormBuilder/FormPreview";
+import { FieldConfigPanel } from "src/components/FormBuilder/FieldConfigPanel";
 
 export function FormBuilder() {
   const [formData, setFormData] = useState({
