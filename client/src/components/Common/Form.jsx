@@ -21,6 +21,7 @@ export function Form({Children}) {
         <input type="text" id="fname" name="fname" />
         <label htmlFor="lname">{Children}</label>
         <input type="text" id="lname" name="lname" />
+        {/* change this */}
       </form>
       <Button>Save</Button>
     </div>
