@@ -1,6 +1,13 @@
 import { Form } from "components/Common/Form";
 
-export function Log () {
+export function FeelingsLog () {
+    return (
+        <div className="content">
+            <Form />
+        </div>
+    )
+};
+export function FoodLog () {
     return (
         <div className="content">
             <Form />
