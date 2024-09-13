@@ -14,3 +14,10 @@ export function FoodLog () {
         </div>
     )
 };
+export function GoalsLog () {
+    return (
+        <div className="content">
+            <Form />
+        </div>
+    )
+};
